@@ -1,7 +1,8 @@
 import { roleTypes } from "../types/roleTypes.ts";
+import { userUpdateTypes } from "../types/userUpdateTypes.ts";
 
 export default interface UserInterfaces{
-    _id: { $oid: string} | null;
+    _id: { $oid: string} | null | string;
     email: string;
     password: string;
     lastname: string;
@@ -13,6 +14,6 @@ export default interface UserInterfaces{
     fullName(): string;
     getAge(): Number;
     insert(): Promise<void>;
-    update(): Promise < any >;
+    update(update: userUpdateTypes): Promise < any >;
     delete(): Promise < any >;
 }

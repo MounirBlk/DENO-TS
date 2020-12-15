@@ -1,7 +1,8 @@
-import { roleTypes } from '../types/roleTypes.ts';
 import UserInterfaces from '../interfaces/UserInterfaces.ts';
 import { UserDB } from "../db/userDb.ts";
 import { hash } from "../helpers/password.helpers.ts";
+import { userUpdateTypes } from "../types/userUpdateTypes.ts";
+import { roleTypes } from '../types/roleTypes.ts';
 
 
 export class UserModels extends UserDB implements UserInterfaces {
@@ -25,10 +26,10 @@ export class UserModels extends UserDB implements UserInterfaces {
         this.dateNaiss = new Date(dateNaiss);
     }
 
-    get _id():{$oid: string} | null{
-        return this.id;
+    get _id(): string | null{
+        return (this.id === null) ? null : this.id.$oid;
     }
-    get role():roleTypes{
+    get role(): roleTypes{
         return this._role;
     }
     async insert(): Promise<void> {
@@ -43,14 +44,19 @@ export class UserModels extends UserDB implements UserInterfaces {
             phoneNumber: this.phoneNumber
         })
     }
-    update(): Promise < any > {
-        throw new Error('Method not implemented.');
+    async update(update: userUpdateTypes): Promise < any > {
+        // updateOne
+        const { modifiedCount } = await this.userdb.updateOne(
+            { _id: this.id },
+            { $set: update }
+        );
     }
     delete(): Promise < any > {
         throw new Error('Method not implemented.');
     }
     setRole(role: roleTypes): void {
         this._role = role;
+        this.update({role: role})
     }
     getAge(): Number {
         var ageDifMs = Date.now() - this.dateNaiss.getTime();

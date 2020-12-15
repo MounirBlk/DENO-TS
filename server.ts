@@ -15,7 +15,7 @@ app.get("/", async(req, res) => {
 const server = await app.listen(port);
 
 let user = new UserModels('a','b','c','d','e','2020-12-15')
-user.insert()
+await user.insert()
 console.log(user)
-// deno run --allow-net --allow-read server.ts
+// deno run --allow-net --unstable --allow-read server.ts
 console.log("app listening on port " + server.port);
