@@ -1,9 +1,8 @@
 import UserInterfaces from '../interfaces/UserInterfaces.ts';
 import { UserDB } from "../db/userDb.ts";
-import { hash } from "../helpers/password.helpers.ts";
+import { hash, comparePass} from "../helpers/password.helpers.ts";
 import { userUpdateTypes } from "../types/userUpdateTypes.ts";
 import { roleTypes } from '../types/roleTypes.ts';
-
 
 export class UserModels extends UserDB implements UserInterfaces {
     [x: string]: any;

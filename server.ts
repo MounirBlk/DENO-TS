@@ -1,7 +1,6 @@
 import * as expressive from "https://raw.githubusercontent.com/NMathar/deno-express/master/mod.ts";
-import { config } from "./config/config.ts";
-import { UserModels } from "./Models/UserModels.ts";
-
+import { config } from './config/config.ts';
+import { UserModels } from './Models/UserModels.ts';
 
 const port = 8001;
 const app = new expressive.App();
@@ -11,11 +10,22 @@ app.get("/", async(req, res) => {
         { id: 2, name: "Jim Doe", phone: "12425323" },
     ]);
 });
+app.post("/register", async(req, res) => {
+    await res.json([
+        { id: 2, name: "Jim Doe", phone: "12425323" },
+    ]);
+});
+app.post("/login", async(req, res) => {
+    await res.json([
+        { id: 2, name: "Jim Doe", phone: "12425323" },
+    ]);
+});
+
+let user = new UserModels('a','b','c','d','e',"1993-11-22");
+user.insert()
+console.log(user);
+
 
 const server = await app.listen(port);
-
-let user = new UserModels('a','b','c','d','e','2020-12-15')
-await user.insert()
-console.log(user)
-// deno run --allow-net --unstable --allow-read server.ts
+// deno run --allow-net --allow-read --unstable server.ts
 console.log("app listening on port " + server.port);
